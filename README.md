@@ -5,7 +5,7 @@ Mod for The Long Dark that magically brings electricity back. You can turn light
 
 The mod allows to turn on lights in all locations with light switches (or even without, with the thl command). Both interior scenes and "outside" locations (such as the Vacant Depot) are supported. 
 
-## Options
+### Options
 + **Intensity Multiplier**: Modifies how much bright or dim will be the electrical lights by default.
 + **Range Multiplier**: Modifies the range that the electrical lights cast light to.
 + **Turn off aurora light flicker**: Turns off light flickering during auroras.
@@ -13,7 +13,7 @@ The mod allows to turn on lights in all locations with light switches (or even w
 + **Colorless lights**: If turned on, lights will cast a more white light. If not, they will cast light with the default color.
 + **Interaction distance**: Controls how far away from the switch you can interact with it, in meters.
 
-## Special Thanks:
+### Special Thanks:
 Huge thanks to Xpazeman, the original creator of the mod, who mainained it throughout all these years.
 
 # Installation:
