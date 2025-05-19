@@ -1,6 +1,6 @@
 # House Lights
 Mod for The Long Dark that magically brings electricity back. You can turn lights on and off by using the light switches.
-
+![Thumbnail](https://raw.githubusercontent.com/DemonBunnyBon/ModListJson/refs/heads/main/THUMB_HL.jpg)
 # Overview
 
 The mod allows to turn on lights in all locations with light switches (or even without, with the thl command). Both interior scenes and "outside" locations (such as the Vacant Depot) are supported. 
