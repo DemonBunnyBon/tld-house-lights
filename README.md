@@ -1,27 +1,9 @@
 # House Lights
 Mod for The Long Dark that magically brings electricity back. You can turn lights on and off by using the light switches.
 
-## Updates
-### v2.5.2
-* NEW: Added switches from the new areas
-* FIX: Null NRE when loading scenes
+# Overview
 
-### v2.5
-* NEW: Added toggle to enable the mod while outside
-* NEW: Added a setting for distance culling to improve performance
-
-### v2.4
-* FIX: Updated to work with TLD 2.06
-
-### v2.3
-* FIX: Updated to work with TLD 1.95 - Fury, then silence.
-
-### v2.2
-* NEW: Added sound to the light switches.
-* FIX: Tweaked code to improve performance, mod is disabled outdoors.
-
-## Installing the mod
-* Read the [installation instructions on the modlist](https://xpazeman.com/tld-mod-list/install.html)
+The mod allows to turn on lights in all locations with light switches (or even without, with the thl command). Both interior scenes and "outside" locations (such as the Vacant Depot) are supported. 
 
 ## Options
 + **Intensity Multiplier**: Modifies how much bright or dim will be the electrical lights by default.
@@ -29,3 +11,16 @@ Mod for The Long Dark that magically brings electricity back. You can turn light
 + **Turn off aurora light flicker**: Turns off light flickering during auroras.
 + **Shadow casting**: If turned on, lights will cast shadows (can show artifacts and might reduce performance)
 + **Colorless lights**: If turned on, lights will cast a more white light. If not, they will cast light with the default color.
++ **Interaction distance**: Controls how far away from the switch you can interact with it, in meters.
+
+## Special Thanks:
+Huge thanks to Xpazeman, the original creator of the mod, who mainained it throughout all these years.
+
+# Installation:
+
+- Download the latest version of [Mod Settings](https://github.com/DigitalzombieTLD/ModSettings/releases), it is required.
+- Download the latest .dll file, drop it in your mods folder.
+- Enjoy!
+
+
+
