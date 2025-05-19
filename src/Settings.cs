@@ -30,19 +30,31 @@ namespace HouseLights
         [Slider(10, 50, 1)]
         public int cullDistance = 50;
 
-        [Section("Misc")]
-
-        [Name("Turn off aurora light flicker")]
-        [Description("If set to yes, aurora powered lights won't flicker and will stay on.")]
-        public bool disableAuroraFlicker = false;
-
         [Name("Cast Shadows")]
         [Description("If set to yes, lights will cast shadows (can show artifacts and might reduce performance)")]
         public bool castShadows = false;
 
+        [Section("Misc")]
+
+        [Name("Turn off aurora light flicker")]
+        [Description("If set to yes, aurora powered lights won't flicker and will stay on.")]
+        public bool disableAuroraFlicker = true;
+
         [Name("Colorless lights")]
         [Description("If set to yes, lights will cast a more white light. If set to no, they will cast light with the default color.")]
         public bool whiteLights = false;
+
+        [Name("Interaction Distance")]
+        [Description("Controls how far away from the switch you can interact with it, in meters.")]
+        [Slider(1, 3, 1)]
+        public int InteractDistance = 1;
+
+        [Section("Debug")]
+
+        [Name("Enable debug logging")]
+        [Description("Enables debug information in the melon log. Only enable for troubleshooting reasons, or if you know what you're doing.")]
+        public bool Debug = false;
+
     }
 
     internal static class Settings

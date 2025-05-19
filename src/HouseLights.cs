@@ -104,23 +104,35 @@ namespace HouseLights
             foreach (GameObject rootObj in rObjs)
             {
                 HouseLightsUtils.GetChildrenWithName(rootObj, "lightswitch", result);
-                HouseLightsUtils.GetChildrenWithName(rootObj, "switchbox", result);
-
+                HouseLightsUtils.GetChildrenWithName(rootObj, "switch_a_black", result);
+                MelonLogger.Msg(rootObj.name);
                 if (result.Count > 0)
                 {
                     foreach (GameObject child in result)
                     {
                         if (child.name != "XPZ_Switch")
                         {
-                            child.layer = 12;
+                            if(Settings.options.Debug)
+                            {
+                              MelonLogger.Msg("Make lightswitch: " + child.name + " into HLSwitch");
+                            }
+                            child.layer = 24;
                             lightSwitches.Add(child);
                             child.name = "XPZ_Switch";
                             wCount++;
+                            if(!child.transform.GetComponent<Collider>())
+                            {
+                                BoxCollider col = child.AddComponent<BoxCollider>();
+                                col.size = new(0.1f, 0.1f, 0.1f);
+                            }
                         }
                     }
                 }
             }
-            MelonLogger.Msg("[House Lights] Light switches found: " + wCount + ".");
+            if (Settings.options.Debug)
+            {
+                MelonLogger.Msg("Light switches found: " + wCount + ".");
+            }
         }
 
         internal static void ToggleLightsState()
@@ -144,7 +156,6 @@ namespace HouseLights
                         electroSources[e].electrolizer.UpdateLight(true);
                         electroSources[e].electrolizer.UpdateEmissiveObjects(true);
                         electroSources[e].electrolizer.UpdateAudio();
-
                         continue;
                     }
                     
@@ -156,7 +167,7 @@ namespace HouseLights
                         cur_range = Math.Min(cur_range, 20f);
 
                         electroSources[e].electrolizer.m_LocalLights[i].range = cur_range;
-
+                        electroSources[e].electrolizer.m_HasFlickerSet = !Settings.options.disableAuroraFlicker;
                         ColorHSV curColor = electroSources[e].colors[i];
 
                         if (Settings.options.whiteLights)
@@ -273,7 +284,6 @@ namespace HouseLights
 
         internal static void RegisterCommands()
         {
-            uConsole.RegisterCommand("toggle_lights", new Action(ToggleLightsState));
             uConsole.RegisterCommand("thl", new Action(ToggleLightsState));
         }
     }

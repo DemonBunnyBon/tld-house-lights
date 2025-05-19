@@ -14,12 +14,14 @@ namespace HouseLights
         {
             public static void Prefix()
             {
-                if (!InterfaceManager.IsMainMenuEnabled() && (!GameManager.IsOutDoorsScene(GameManager.m_ActiveScene) || HouseLights.notReallyOutdoors.Contains(GameManager.m_ActiveScene)))
+                if (!InterfaceManager.IsMainMenuEnabled() && (!GameManager.IsOutDoorsScene(GameManager.m_ActiveScene) || Settings.options.enableOutside || HouseLights.notReallyOutdoors.Contains(GameManager.m_ActiveScene)))
                 {
                     MelonLogger.Msg("Scene Init");
 
                     HouseLights.Init();
                     HouseLights.GetSwitches();
+
+
                 }
             }
         }
@@ -29,9 +31,10 @@ namespace HouseLights
         {
             private static void Postfix(AuroraModularElectrolizer __instance)
             {
-                if (InterfaceManager.IsMainMenuEnabled() || (GameManager.IsOutDoorsScene(GameManager.m_ActiveScene) && !HouseLights.notReallyOutdoors.Contains(GameManager.m_ActiveScene)))
+                if (InterfaceManager.IsMainMenuEnabled() || (GameManager.IsOutDoorsScene(GameManager.m_ActiveScene) && !HouseLights.notReallyOutdoors.Contains(GameManager.m_ActiveScene) && !Settings.options.enableOutside))
                 {
                     return;
+                    
                 }
 
                 AuroraActivatedToggle[] radios = __instance.gameObject.GetComponentsInParent<AuroraActivatedToggle>();
@@ -41,6 +44,9 @@ namespace HouseLights
                 {
                     HouseLights.AddElectrolizer(__instance);
                 }
+
+                __instance.m_HasFlickerSet = !Settings.options.disableAuroraFlicker;
+
 
             }
         }
@@ -83,7 +89,7 @@ namespace HouseLights
             {
                 if (GameManager.GetMainCamera() == null) return;
                 
-                GameObject interactiveObject = __instance.GetInteractiveObjectUnderCrosshairs(100);
+                GameObject interactiveObject = __instance.GetInteractiveObjectUnderCrosshairs(Settings.options.InteractDistance);
                 string hoverText;
 
                 if (interactiveObject != null && interactiveObject.name == "XPZ_Switch")
@@ -92,9 +98,10 @@ namespace HouseLights
                     {
                         hoverText = "Turn Lights Off";
                     }
-                    else
+                    else 
                     {
                         hoverText = "Turn Lights On";
+                        
                     }
 
                     hud.SetHoverText(hoverText, interactiveObject, HoverTextState.CanInteract);
@@ -107,38 +114,18 @@ namespace HouseLights
         {
             private static void Postfix(PlayerManager __instance, ref bool __result)
             {
-                GameObject interactiveObject = __instance.GetInteractiveObjectUnderCrosshairs(100);
+                GameObject interactiveObject = __instance.GetInteractiveObjectUnderCrosshairs(Settings.options.InteractDistance);
 
                 if (interactiveObject != null && interactiveObject.name == "XPZ_Switch")
                 {
                     HouseLights.ToggleLightsState();
                     GameAudioManager.PlaySound("Stop_RadioAurora", __instance.gameObject);
 
-                    Vector3 scale = interactiveObject.transform.localScale;
-                    interactiveObject.transform.localScale = new Vector3(scale.x, scale.y * -1, scale.z);
-
-                    //Play Sound
-
                     __result = true;
                 }
             }
         }
 
-        [HarmonyPatch(typeof(AuroraModularElectrolizer), "UpdateIntensity")]
-        internal class AuroraElectrolizer_UpdateIntensity
-        {
-            private static bool Prefix(AuroraModularElectrolizer __instance)
-            {
-                if (Settings.options.disableAuroraFlicker)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-        }
 
         [HarmonyPatch(typeof(Weather), "IsTooDarkForAction", new Type[] { typeof(ActionsToBlock) })]
         internal class Weather_IsTooDarkForAction
