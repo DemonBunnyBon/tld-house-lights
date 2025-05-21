@@ -7,7 +7,7 @@ namespace HouseLights
 {
     internal class HouseLightsSettings : JsonModSettings
     {
-        [Section("Light strength")]
+        [Section("Visuals")]
 
         [Name("Intensity Value")]
         [Description("Set the intensity for the lights.")]
@@ -19,10 +19,18 @@ namespace HouseLights
         [Slider(0f, 5f, 1)]
         public float rangeMultiplier = 1.4f;
 
+        [Name("Colorless lights")]
+        [Description("If set to yes, lights will cast a more white light. If set to no, they will cast light with the default color.")]
+        public bool whiteLights = false;
+
+        [Name("Turn off aurora light flicker")]
+        [Description("If set to yes, aurora powered lights won't flicker and will stay on.")]
+        public bool disableAuroraFlicker = true;
+
         [Section("Performance")]
 
         [Name("Enable Outside")]
-        [Description("Toggle to enable or disable the mod while outdoors. Can impact performance, but will make it available in places without a loading screen.")]
+        [Description("Toggle to enable or disable the mod while outdoors. Can impact performance, but will make it available in places without a loading screen. WARNING: Highly experimental, it will turn on lights such as street lamps.")]
         public bool enableOutside = false;
 
         [Name("Distance Culling")]
@@ -36,13 +44,9 @@ namespace HouseLights
 
         [Section("Misc")]
 
-        [Name("Turn off aurora light flicker")]
-        [Description("If set to yes, aurora powered lights won't flicker and will stay on.")]
-        public bool disableAuroraFlicker = true;
-
-        [Name("Colorless lights")]
-        [Description("If set to yes, lights will cast a more white light. If set to no, they will cast light with the default color.")]
-        public bool whiteLights = false;
+        [Name("Enable Light Audio")]
+        [Description("If enabled, lamps will emit a buzzing sound when turned on, even without an aurora active.")]
+        public bool LightAudio = false;
 
         [Name("Interaction Distance")]
         [Description("Controls how far away from the switch you can interact with it, in meters.")]
@@ -54,6 +58,9 @@ namespace HouseLights
         [Name("Enable debug logging")]
         [Description("Enables debug information in the melon log. Only enable for troubleshooting reasons, or if you know what you're doing.")]
         public bool Debug = false;
+        [Name("Enable Placer.")]
+        [Description("Enables debug features for placement of new switches in scenes, this shouldn't be enabled by users, placed switches will not be saved.")]
+        public bool Placer = false;
 
     }
 

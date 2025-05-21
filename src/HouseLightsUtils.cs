@@ -3,6 +3,10 @@ using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
+using Il2Cpp;
+using MelonLoader;
+using System.Reflection.Metadata.Ecma335;
 
 namespace HouseLights
 {
@@ -68,6 +72,48 @@ namespace HouseLights
                     GetChildrenWithName(child, name, result);
                 }
             }
+        }
+
+        public static Shader vanillaShader = Shader.Find("Shader Forge/TLD_StandardDiffuse");
+
+        public static GameObject InstantiateSwitch(Vector3 pos, Vector3 rot, int variant)
+        {
+            GameObject ls;
+            if (variant == 1)
+            {
+                ls = GameManager.Instantiate(HouseLights.HLbundle.LoadAsset<GameObject>("OBJ_SwitchHLB"));
+            }
+            else if(variant == 2)
+            {
+                ls = GameManager.Instantiate(HouseLights.HLbundle.LoadAsset<GameObject>("OBJ_SwitchHLC"));
+            }
+            else if(variant == 3)
+            {
+                ls = GameManager.Instantiate(HouseLights.HLbundle.LoadAsset<GameObject>("OBJ_SwitchHLD"));
+            }
+            else
+            {
+                ls = GameManager.Instantiate(HouseLights.HLbundle.LoadAsset<GameObject>("OBJ_SwitchHL"));
+            }
+
+            MeshRenderer[] rs = ls.GetComponentsInChildren<MeshRenderer>();
+            foreach(MeshRenderer r in rs)
+            {
+                Texture tex = r.material.mainTexture;
+                Material mat = new(vanillaShader);
+                mat.mainTexture = tex;
+                r.material = mat;
+            }
+
+            ls.transform.eulerAngles = rot;
+            ls.transform.position = pos;
+            ls.transform.localScale = new(1f, 1f, 1f);
+
+            if(Settings.options.Debug)
+            {
+                MelonLogger.Msg("Instantiate new House Lights switch.");
+            }
+            return ls;
         }
 
     }

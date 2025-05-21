@@ -35,6 +35,14 @@
 	</Target>
 
 	<ItemGroup>
+	  <None Remove="hlbundle" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="hlbundle" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <PackageReference Include="STBlade.Modding.TLD.Il2CppAssemblies.Windows" Version="2.40.0" />
 	  <PackageReference Include="STBlade.Modding.TLD.ModSettings" Version="1.9.0" />
 	</ItemGroup>

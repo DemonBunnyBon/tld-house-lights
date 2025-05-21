@@ -16,8 +16,12 @@ namespace HouseLights
             {
                 if (!InterfaceManager.IsMainMenuEnabled() && (!GameManager.IsOutDoorsScene(GameManager.m_ActiveScene) || Settings.options.enableOutside || HouseLights.notReallyOutdoors.Contains(GameManager.m_ActiveScene)))
                 {
-                    MelonLogger.Msg("Scene Init");
+                    if (Settings.options.Debug)
+                    {
+                        MelonLogger.Msg("Scene Init");
+                    }
 
+                    HouseLights.InstantiateCustomSwitches(GameManager.m_ActiveScene);
                     HouseLights.Init();
                     HouseLights.GetSwitches();
 
@@ -92,7 +96,7 @@ namespace HouseLights
                 GameObject interactiveObject = __instance.GetInteractiveObjectUnderCrosshairs(Settings.options.InteractDistance);
                 string hoverText;
 
-                if (interactiveObject != null && interactiveObject.name == "XPZ_Switch")
+                if (interactiveObject != null && interactiveObject.name == "MOD_HouseLightSwitch")
                 {
                     if (HouseLights.lightsOn)
                     {
@@ -116,11 +120,14 @@ namespace HouseLights
             {
                 GameObject interactiveObject = __instance.GetInteractiveObjectUnderCrosshairs(Settings.options.InteractDistance);
 
-                if (interactiveObject != null && interactiveObject.name == "XPZ_Switch")
+                if (interactiveObject != null && interactiveObject.name == "MOD_HouseLightSwitch")
                 {
                     HouseLights.ToggleLightsState();
                     GameAudioManager.PlaySound("Stop_RadioAurora", __instance.gameObject);
-
+                    float curScaleX = interactiveObject.transform.localScale.x;
+                    float curScaleY = interactiveObject.transform.localScale.y;
+                    float curScaleZ = interactiveObject.transform.localScale.z;
+                    interactiveObject.transform.localScale = new(curScaleX, curScaleY * -1, curScaleZ);
                     __result = true;
                 }
             }
