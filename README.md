@@ -22,5 +22,7 @@ Huge thanks to Xpazeman, the original creator of the mod, who mainained it throu
 - Download the latest .dll file, drop it in your mods folder.
 - Enjoy!
 
+## Support
+You can support me via donations [here](https://ko-fi.com/marcythejinx)!
 
 
