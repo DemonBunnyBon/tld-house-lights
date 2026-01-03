@@ -14,19 +14,24 @@ namespace HouseLights
         {
             public static void Prefix()
             {
-                if (!InterfaceManager.IsMainMenuEnabled() && (!GameManager.IsOutDoorsScene(GameManager.m_ActiveScene) || Settings.options.enableOutside || HouseLights.notReallyOutdoors.Contains(GameManager.m_ActiveScene)))
+                if (HouseLightsUtils.IsMenu())
                 {
-                    if (Settings.options.Debug)
+                    return;
+                }
+                    if (!InterfaceManager.IsMainMenuEnabled() && (!GameManager.IsOutDoorsScene(GameManager.m_ActiveScene) || Settings.options.enableOutside || HouseLights.notReallyOutdoors.Contains(GameManager.m_ActiveScene)))
                     {
-                        MelonLogger.Msg("Scene Init");
+                        if (Settings.options.Debug)
+                        {
+                            MelonLogger.Msg("Scene Init");
+                        }
+
+                        HouseLights.InstantiateCustomSwitches(GameManager.m_ActiveScene);
+                        HouseLights.Init();
+                        HouseLights.GetSwitches();
+
+
                     }
 
-                    HouseLights.InstantiateCustomSwitches(GameManager.m_ActiveScene);
-                    HouseLights.Init();
-                    HouseLights.GetSwitches();
-
-
-                }
             }
         }
 
@@ -35,6 +40,10 @@ namespace HouseLights
         {
             private static void Postfix(AuroraModularElectrolizer __instance)
             {
+                if (HouseLightsUtils.IsMenu())
+                {
+                    return;
+                }
                 if (InterfaceManager.IsMainMenuEnabled() || (GameManager.IsOutDoorsScene(GameManager.m_ActiveScene) && !HouseLights.notReallyOutdoors.Contains(GameManager.m_ActiveScene) && !Settings.options.enableOutside))
                 {
                     return;
@@ -60,6 +69,10 @@ namespace HouseLights
         {
             private static void Postfix(AuroraManager __instance, AuroraLightingSimple auroraLightSimple)
             {
+                if (HouseLightsUtils.IsMenu())
+                {
+                    return;
+                }
                 if (InterfaceManager.IsMainMenuEnabled() || (GameManager.IsOutDoorsScene(GameManager.m_ActiveScene) && !HouseLights.notReallyOutdoors.Contains(GameManager.m_ActiveScene) && !Settings.options.enableOutside))
                 {
                     return;
@@ -74,6 +87,10 @@ namespace HouseLights
         {
             private static void Postfix(AuroraManager __instance)
             {
+                if (HouseLightsUtils.IsMenu())
+                {
+                    return;
+                }
                 if (InterfaceManager.IsMainMenuEnabled() || (GameManager.IsOutDoorsScene(GameManager.m_ActiveScene) && !HouseLights.notReallyOutdoors.Contains(GameManager.m_ActiveScene) && !Settings.options.enableOutside))
                 {
                     return;
@@ -91,6 +108,10 @@ namespace HouseLights
         {
             private static void Postfix(PlayerManager __instance, Panel_HUD hud)
             {
+                if (HouseLightsUtils.IsMenu())
+                {
+                    return;
+                }
                 if (GameManager.GetMainCamera() == null) return;
                 
                 GameObject interactiveObject = __instance.GetInteractiveObjectUnderCrosshairs(Settings.options.InteractDistance);
@@ -118,6 +139,10 @@ namespace HouseLights
         {
             private static void Postfix(PlayerManager __instance, ref bool __result)
             {
+                if (HouseLightsUtils.IsMenu())
+                {
+                    return;
+                }
                 GameObject interactiveObject = __instance.GetInteractiveObjectUnderCrosshairs(Settings.options.InteractDistance);
 
                 if (interactiveObject != null && interactiveObject.name == "MOD_HouseLightSwitch")
@@ -139,6 +164,10 @@ namespace HouseLights
         {
             private static void Postfix(Weather __instance, ref bool __result)
             {
+                if (HouseLightsUtils.IsMenu())
+                {
+                    return;
+                }
                 if (__result && GameManager.GetWeatherComponent().IsIndoorScene() && HouseLights.lightsOn)
                 {
                     __result = false;

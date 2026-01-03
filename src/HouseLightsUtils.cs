@@ -115,6 +115,34 @@ namespace HouseLights
             }
             return ls;
         }
+        
+        internal static bool IsMenu()
+        {
+            if (GameManager.m_ActiveScene != null)
+            {
+                if (GameManager.m_ActiveScene.Contains("MainMenu") || InterfaceManager.IsMainMenuEnabled())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
+        
+        public static AssetBundle LoadFromStream(string name)
+        {
+            using (Stream? stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(name))
+            {
+                MemoryStream? memory = new((int)stream.Length);
+                stream!.CopyTo(memory);
+
+                Il2CppSystem.IO.MemoryStream memoryStream = new Il2CppSystem.IO.MemoryStream(memory.ToArray());
+                
+                AssetBundle loadFromMemoryInternal = AssetBundle.LoadFromStream(memoryStream);
+                return loadFromMemoryInternal;
+            };
+        }
 
     }
 }

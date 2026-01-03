@@ -9,7 +9,6 @@ using Il2CppTLD.ModularElectrolizer;
 using UnityEngine.UI.Collections;
 using UnityEngine.UI;
 using Il2CppAK;
-using static Il2Cppgw.gql.Interpreter;
 using SevenZip.CommandLineParser;
 
 namespace HouseLights
@@ -56,18 +55,8 @@ namespace HouseLights
         public override void OnInitializeMelon()
         {
             Settings.OnLoad();
-            assetBundle = LoadAssetBundle("HouseLights.hlbundle");
+            assetBundle = HouseLightsUtils.LoadFromStream("HouseLights.hlbundle");
             RegisterCommands();
-        }
-        private static AssetBundle LoadAssetBundle(string path)
-        {
-            using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(path);
-            MemoryStream memoryStream = new MemoryStream((int)stream.Length);
-            stream.CopyTo(memoryStream);
-
-            return memoryStream.Length != 0
-                ? AssetBundle.LoadFromMemory(memoryStream.ToArray())
-                : throw new System.Exception("No data loaded!");
         }
 
         internal static void Init()
